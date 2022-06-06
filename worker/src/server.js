@@ -7,12 +7,15 @@ export default {
         return hashHex;
     },
     async getServer(serverHash) {
-        let serverQuery = await SERVERS.get(serverHash);
-        return serverQuery;
+        let { value, metadata } = await SERVERS.getWithMetadata(serverHash);
+        let serverQuery = JSON.parse(value);
+        serverQuery.likes = metadata.likes;
+        return JSON.stringify(serverQuery);
     },
     async createServer(postData) {
-        postData.port = (postData.port != undefined) ? postData.port : 25565;
         let serverHash = await this.getHash(postData.ip, postData.port);
+        let server = await SERVERS.get(serverHash)
+        if(server != null) return server;
 
         let serverJson = JSON.stringify({
             hash: serverHash,
@@ -22,11 +25,19 @@ export default {
             query: await this.doServerQuery(postData.ip, postData.port)
         })
 
-        SERVERS.put(serverHash, serverJson, {
+        await SERVERS.put(serverHash, serverJson, {
             metadata: { likes: 0 },
         })
 
         return serverJson;
+    },
+    async likeServer(serverHash) {
+        let { value, metadata } = await SERVERS.getWithMetadata(serverHash);
+        await SERVERS.delete(serverHash);
+        await SERVERS.put(serverHash, value, {
+            metadata: { likes: metadata.likes + 1 }
+        })
+        return JSON.parse(`{"success":true}`)
     },
     async doServerQuery(ip, port) {
         let response = await fetch(`https://minecraft-api.com/api/ping/${ip}/${port}/json`)

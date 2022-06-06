@@ -1,19 +1,20 @@
 <template>
-  <tr class="mb-3" v-if="server != null" :class="{ premium: server.rank == 0 }">
+  <tr class="mb-3" v-if="server != null" :class="{ premium: server.hash == capecraftHash }">
     <td class="col-1 text-center align-middle">
-      <div v-if="server.rank == 0">
+      <div v-if="server.hash == capecraftHash">
         <font-awesome-layers class="fa-2xl">
           <font-awesome-icon icon="circle" />
           <font-awesome-icon icon="star" transform="left-1 shrink-7" inverse />
         </font-awesome-layers>
       </div>
-      <kbd v-else>{{ server.rank }}</kbd>
+      <kbd v-else>{{ server.likes }}</kbd>
     </td>
     <td class="col-2 align-middle">
-      <strong>{{ server.name }}</strong>
+      <strong><router-link :to="`/server/${server.hash}`">{{ server.name }}</router-link></strong>
     </td>
     <td class="col-6 align-middle">
       <!-- <img :src="server.banner" class="w-full" /> -->
+      <img :src="server.query.favicon" class="w-full"/>
       <img src="https://placeholder.pics/svg/468x60" class="w-full"/>
       <div class="server-ip">
         <span
@@ -25,9 +26,7 @@
       </div>
     </td>
     <td class="col-1 text-center align-middle">
-      <span class="badge text-bg-warning"
-        >{{ server.query.players.online }}/{{ server.query.players.max }}</span
-      >
+      <span class="badge text-bg-warning">{{ server.query.players.online }}/{{ server.query.players.max }}</span>
     </td>
     <td class="col-1 text-center align-middle">
       <span class="badge text-bg-primary">{{ server.query.version.name }}</span>
@@ -43,6 +42,7 @@
 export default {
   data() {
     return {
+      capecraftHash: "0b54153bb5c2bbfd4df8480a8eb2baa16197421a4819e5a1c502f7a3f070077c",
       server: null,
     };
   },
@@ -79,7 +79,7 @@ export default {
   display: block;
   color: #fff;
   background: #42b7e6;
-  width: 468px;
+  width: 532px;
 }
 
 .server-ip > span {

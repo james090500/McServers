@@ -4,6 +4,8 @@ import { createRouter, createWebHashHistory } from "vue-router";
 // Pages
 import McServers from "./McServers.vue";
 import HomePage from "./pages/HomePage.vue";
+import AddServerPage from "./pages/AddServerPage.vue";
+import ServerPage from "./pages/ServerPage.vue";
 
 // Create Vue App
 const app = createApp(McServers);
@@ -24,7 +26,11 @@ app.component("font-awesome-layers", FontAwesomeLayers);
 // Router
 const router = createRouter({
   history: createWebHashHistory(),
-  routes: [{ path: "/", component: HomePage }],
+  routes: [
+    { path: "/", component: HomePage },
+    { path: "/server/add", component: AddServerPage },
+    { path: "/server/:hash", component: ServerPage }
+  ],
 });
 app.use(router);
 
