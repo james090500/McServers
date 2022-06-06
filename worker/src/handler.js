@@ -1,14 +1,6 @@
 import { Router } from 'itty-router'
 import Server from './server'
-
-// response-modifying middleware to add CORS headers (including in OPTIONS requests)
-const addCorsheaders = response => {
-    response.headers.set('Access-Control-Allow-Origin', '*')
-    response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-    response.headers.set('Access-Control-Allow-Headers', 'authorization, referer, origin, content-type')
-    response.headers.set('Access-Control-Max-Age', '3600')
-    return response
-}
+import { handleCors, wrapCorsHeader } from './corshelper'
 
 // Load the router
 const router = Router()
@@ -27,11 +19,15 @@ router.get('/v1/server/list', async request => {
 })
 
 // Create the server
+router.options('/v1/server/create', handleCors({ methods: 'POST', maxAge: 86400 }))
 router.post('/v1/server/create', async request => {
     let formData = await request.json();
     let response = await Server.createServer(formData)
     if(response === null) return new Response(jsonNotFound, { status: 404, headers: jsonHeader });
-    return new Response(response, { headers: jsonHeader });
+
+    return wrapCorsHeader(
+        new Response(response), { status: 201 }
+    )
 })
 
 //Like a server
@@ -50,8 +46,7 @@ router.get('/v1/server/:serverHash', async request => {
 })
 
 // All other routers
-router.options('/*', () => new Response(jsonNotFound, { status: 204 }))
-router.get('/*', () => new Response(jsonNotFound, { status: 404, headers: jsonHeader }))
+router.get('*', () => new Response(jsonNotFound, { status: 404, headers: jsonHeader }))
 
 // Return the router
-export const handleRequest = request => router.handle(request).then(addCorsheaders)
+export const handleRequest = request => router.handle(request)

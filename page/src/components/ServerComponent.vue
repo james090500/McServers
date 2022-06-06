@@ -1,7 +1,7 @@
 <template>
-  <tr class="mb-3" v-if="server != null" :class="{ premium: server.hash == capecraftHash }">
+  <tr class="mb-3" v-if="server != null" :class="{ premium: server.ip == capecraft }">
     <td class="col-1 text-center align-middle">
-      <div v-if="server.hash == capecraftHash">
+      <div v-if="server.ip == capecraft">
         <font-awesome-layers class="fa-2xl">
           <font-awesome-icon icon="circle" />
           <font-awesome-icon icon="star" transform="left-1 shrink-7" inverse />
@@ -42,7 +42,7 @@
 export default {
   data() {
     return {
-      capecraftHash: "0b54153bb5c2bbfd4df8480a8eb2baa16197421a4819e5a1c502f7a3f070077c",
+      capecraft: "play.capecraft.net",
       server: null,
     };
   },
