@@ -59,7 +59,7 @@
             };
         },
         created() {
-            this.axios.get("http://localhost:8787/v1/server/list").then((response) => {
+            this.axios.get("https://mcservers-api.james090500.workers.dev/v1/server/list").then((response) => {
                 this.servers = response.data;
             });
         },

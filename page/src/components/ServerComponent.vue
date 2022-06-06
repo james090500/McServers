@@ -55,7 +55,7 @@ export default {
   },
   created() {
     this.axios
-      .get(`http://localhost:8787/v1/server/${this.server_id}`)
+      .get(`https://mcservers-api.james090500.workers.dev/v1/server/${this.server_id}`)
       .then((response) => {
         this.server = response.data;
       });
