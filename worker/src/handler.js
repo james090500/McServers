@@ -9,6 +9,10 @@ import { handleCors, wrapCorsHeader } from './corshelper'
 
 // Load the router
 const router = Router()
+const imageHeader = {
+    'Access-Control-Allow-Origin': '*',
+    'Content-type': 'image/png'
+}
 
 // List the servers
 router.get('/v1/server/list', async () => {
@@ -23,19 +27,29 @@ router.get('/v1/server/list', async () => {
 router.post('/v1/server/create', async request => {
     let formData = await request.json();
     let response = await Server.createServer(formData)
-    return wrapCorsHeader((response) ? json(response) : error('Something went wrong'));
+    return wrapCorsHeader((response) ? json(response) : error(500, 'Something went wrong'));
 })
 
 //Like a server
 router.post('/v1/server/:serverHash/like', async request => {
     let response = await Server.likeServer(request.params.serverHash)
-    return wrapCorsHeader((response) ? json(response) : error('Something went wrong'));
+    return wrapCorsHeader((response) ? json(response) : error(500, 'Something went wrong'));
+})
+
+// Get the MOTD
+router.get('/v1/server/:serverHash/motd', async request => {
+    let serverData = JSON.parse(await SERVERS.get(request.params.serverHash));
+    let motd = await fetch(`http://status.mclive.eu/${serverData.name}/${serverData.ip}/${serverData.port}/banner.png`)
+    if(!motd.ok) return error(500, 'Something went wrong')
+    let motdBlob = await motd.blob()
+    let response = new Response(motdBlob, { headers: { 'Content-type': 'image/png' }});
+    return wrapCorsHeader((response) ? response : error(500, 'Something went wrong'))
 })
 
 // Get the server
 router.get('/v1/server/:serverHash', async request => {
     let response = await Server.getServer(request.params.serverHash)
-    return wrapCorsHeader((response) ? json(response) : error('Something went wrong'));
+    return wrapCorsHeader((response) ? json(response) : error(500, 'Something went wrong'));
 })
 
 // Testing CRON on Wrangler

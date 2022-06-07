@@ -15,7 +15,7 @@
             </strong>
         </td>
         <td class="align-middle">
-            <img :src="`http://status.mclive.eu/${server.name}/${server.ip}/${server.port}/banner.png`"/>
+            <img :src="`${$baseUrl}/v1/server/${server.hash}/motd`"/>
             <div class="server-ip">
                 <span>
                     <font-awesome-icon icon="cube" class="me-2" />{{ server.ip }}</span>

@@ -15,9 +15,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
 
 // Axios
+app.config.globalProperties.$baseUrl = (import.meta.env.DEV) ? 'http://localhost:8787' : 'https://mcservers-api.james090500.workers.dev'
 import axios from "axios";
 let axiosInstance = axios.create({
-  baseURL: (import.meta.env.DEV) ? 'http://localhost:8787' : 'https://mcservers-api.james090500.workers.dev'
+  baseURL: app.config.globalProperties.$baseUrl
 });
 app.config.globalProperties.axios = axiosInstance;
 
