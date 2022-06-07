@@ -38,10 +38,12 @@ router.get('/v1/server/:serverHash', async request => {
     return wrapCorsHeader((response) ? json(response) : error('Something went wrong'));
 })
 
-router.get('/cron', async request => {
-    await Server.updateServers();
-    return json("Done")
-})
+if (ENVIRONMENT === "dev") {
+    router.get('/cron', async request => {
+        await Server.updateServers();
+        return json("Done")
+    })
+}
 
 // All other routers
 router.options('*', handleCors())

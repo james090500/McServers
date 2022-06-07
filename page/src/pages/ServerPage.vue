@@ -33,6 +33,10 @@
                         <td v-if="server.online"><span class="badge text-bg-success">Online</span></td>
                         <td v-else><span class="badge text-bg-danger">Offline</span></td>
                     </tr>
+                    <tr>
+                        <td>Last Updated</td>
+                        <td><span class="badge text-bg-info">{{ lastUpdated }}</span></td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -41,13 +45,11 @@
             <div class="accordion">
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
                             How do I join {{server.name}}?
                         </button>
                     </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                        data-bs-parent="#accordionExample">
+                    <div id="collapseOne" class="accordion-collapse collapse show">
                         <div class="accordion-body">
                             Simply open up Minecraft, click "Multiplayer" then click "Direct Connect" and type the IP
                             <kbd>{{server.ip}}<span v-if="server.port != '25565'">:{{server.port}}</span></kbd>
@@ -56,13 +58,11 @@
                 </div>
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseTwo">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
                             What version is {{server.name}}?
                         </button>
                     </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                        data-bs-parent="#accordionExample">
+                    <div id="collapseTwo" class="accordion-collapse collapse show">
                         <div class="accordion-body">
                             According to our automated data, the server version is <span
                                 class="badge text-bg-primary">{{ server.query.version.name }}</span>.
@@ -72,15 +72,13 @@
                 </div>
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseThree">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
                             Where is {{server.name}} hosted?
                         </button>
                     </h2>
-                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                        data-bs-parent="#accordionExample">
+                    <div id="collapseThree" class="accordion-collapse collapse show">
                         <div class="accordion-body">
-                            {{server.name}} is hosted in COUNTRY //TODO
+                            {{server.name}} is hosted in <strong>{{server.country}}</strong>
                         </div>
                     </div>
                 </div>
@@ -96,11 +94,13 @@
 </style>
 
 <script>
+    import { DateTime } from "luxon";
+
     export default {
         data() {
             return {
                 liked: false,
-                server: null,
+                server: null
             };
         },
         methods: {
@@ -118,6 +118,11 @@
             this.axios.get(`/v1/server/${this.$route.params.hash}`).then((response) => {
                 this.server = response.data;
             });
+        },
+        computed: {
+            lastUpdated: function() {
+                return DateTime.fromMillis(this.server.updated).toRelative()
+            }
         }
     }
 </script>

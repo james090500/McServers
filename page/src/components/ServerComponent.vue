@@ -44,6 +44,7 @@
 
 <script>
     import useClipboard from 'vue-clipboard3'
+
     export default {
         data() {
             return {

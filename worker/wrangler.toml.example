@@ -1,14 +1,18 @@
 name = "mcservers-api"
 main = "src/index.js"
+vars = { ENVIRONMENT = "dev" }
+compatibility_date = "2022-06-07"
 
 account_id = ""
 workers_dev = true
 route = "mcservers-api.james090500.com/*"
 
-compatibility_date = "2022-06-06"
 kv_namespaces = [
   { binding = "SERVERS", id = "", preview_id = "" }
 ]
 
 [triggers]
 crons = ["*/10 * * * *"]
+
+[env.production]
+vars = { ENVIRONMENT = "prod" }

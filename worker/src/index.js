@@ -8,6 +8,5 @@ addEventListener('fetch', (event) => {
 
 // Run Cron Events
 addEventListener('scheduled', event => {
-    console.log("Cron helllo?")
     event.waitUntil(server.updateServers());
 });

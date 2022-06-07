@@ -6,6 +6,11 @@ export default {
         let hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         return hashHex;
     },
+    async getServerCountry(ip) {
+        let response = await fetch(`http://ip-api.com/json/${ip}`)
+        let data = await response.json();
+        return (data.status == "success") ? data.country : false;
+    },
     async getServer(serverHash) {
         let { value, metadata } = await SERVERS.getWithMetadata(serverHash);
         let serverQuery = JSON.parse(value);
@@ -24,7 +29,8 @@ export default {
             port: postData.port,
             updated: Date.now(),
             online: true,
-            query: await this.doServerQuery(postData.ip, postData.port)
+            query: await this.doServerQuery(postData.ip, postData.port),
+            country: await this.getServerCountry(postData.ip)
         })
 
         await SERVERS.put(serverHash, serverJson, {
@@ -60,6 +66,7 @@ export default {
             let serverData = JSON.parse(value);
             serverData.updated = Date.now()
             serverData.online = (serverQuery != false);
+            serverData.country = await this.getServerCountry(serverData.ip)
             SERVERS.put(serverData.hash, JSON.stringify(serverData), {
                 metadata: { likes: metadata.likes }
             })
