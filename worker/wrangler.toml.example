@@ -1,6 +1,5 @@
 name = "mcservers-api"
 main = "src/index.js"
-vars = { ENVIRONMENT = "dev" }
 compatibility_date = "2022-06-07"
 
 account_id = ""
@@ -13,6 +12,3 @@ kv_namespaces = [
 
 [triggers]
 crons = ["*/10 * * * *"]
-
-[env.production]
-vars = { ENVIRONMENT = "prod" }

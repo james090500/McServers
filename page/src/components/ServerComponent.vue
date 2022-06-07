@@ -1,6 +1,6 @@
 <template>
     <tr class="mb-3" v-if="server != null" :class="{ premium: server.hash == capecraft }">
-        <td class="col-1 text-center align-middle">
+        <td class="text-center align-middle">
             <div v-if="server.hash == capecraft">
                 <font-awesome-layers class="fa-2xl">
                     <font-awesome-icon icon="circle" />
@@ -9,15 +9,13 @@
             </div>
             <kbd v-else>{{ server.likes }}</kbd>
         </td>
-        <td class="col-2 align-middle">
+        <td class="align-middle">
             <strong>
                 <router-link :to="`/server/${server.hash}`">{{ server.name }}</router-link>
             </strong>
         </td>
-        <td class="col-6 align-middle">
-            <!-- <img :src="server.banner" class="w-full" /> -->
-            <img :src="server.query.favicon" class="w-full" />
-            <img src="https://placeholder.pics/svg/468x60" class="w-full" />
+        <td class="align-middle">
+            <img :src="`http://status.mclive.eu/${server.name}/${server.ip}/${server.port}/banner.png`"/>
             <div class="server-ip">
                 <span>
                     <font-awesome-icon icon="cube" class="me-2" />{{ server.ip }}</span>
@@ -29,13 +27,13 @@
                 </button>
             </div>
         </td>
-        <td class="col-1 text-center align-middle">
+        <td class="text-center align-middle">
             <span class="badge text-bg-warning">{{ server.query.players.online }}/{{ server.query.players.max }}</span>
         </td>
-        <td class="col-1 text-center align-middle">
+        <td class="text-center align-middle">
             <span class="badge text-bg-primary">{{ server.query.version.name }}</span>
         </td>
-        <td class="col-1 text-center align-middle">
+        <td class="text-center align-middle">
             <span v-if="server.online" class="badge text-bg-success">Online</span>
             <span v-else class="badge text-bg-danger">Offline</span>
         </td>
@@ -75,7 +73,7 @@
             server_id: {
                 type: String,
             },
-        },
+        }
     };
 </script>
 
@@ -90,7 +88,7 @@
         display: block;
         color: #fff;
         background: #42b7e6;
-        width: 532px;
+        width: 620px;
     }
 
     .server-ip>span {
