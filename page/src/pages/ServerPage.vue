@@ -102,12 +102,12 @@ export default {
             });
         },
         likeServer() {
-            this.axios.post(`https://mcservers-api.james090500.workers.dev/v1/server/${this.$route.params.hash}/like`);
+            this.axios.post(`/v1/server/${this.$route.params.hash}/like`);
             this.liked = true;
         }
     },
     created() {
-        this.axios.get(`https://mcservers-api.james090500.workers.dev/v1/server/${this.$route.params.hash}`).then((response) => {
+        this.axios.get(`/v1/server/${this.$route.params.hash}`).then((response) => {
             this.server = response.data;
         });
     }

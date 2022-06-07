@@ -1,6 +1,6 @@
 export default {
     async getHash(ip, port) {
-        let serverIpPort = new TextEncoder().encode(`${ip}:${port}`);
+        let serverIpPort = new TextEncoder().encode(`${ip.toLowerCase()}:${port}`);
         let hashBuffer = await crypto.subtle.digest('SHA-256', serverIpPort);
         let hashArray = Array.from(new Uint8Array(hashBuffer));
         let hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
@@ -10,7 +10,7 @@ export default {
         let { value, metadata } = await SERVERS.getWithMetadata(serverHash);
         let serverQuery = JSON.parse(value);
         serverQuery.likes = metadata.likes;
-        return JSON.stringify(serverQuery);
+        return serverQuery;
     },
     async createServer(postData) {
         let serverHash = await this.getHash(postData.ip, postData.port);
@@ -37,7 +37,7 @@ export default {
         await SERVERS.put(serverHash, value, {
             metadata: { likes: metadata.likes + 1 }
         })
-        return JSON.parse(`{"success":true}`)
+        return true;
     },
     async doServerQuery(ip, port) {
         let response = await fetch(`https://minecraft-api.com/api/ping/${ip}/${port}/json`)

@@ -1,3 +1,7 @@
+/**
+ * Thanks to GeorgeBoot on GitHub for this useful CORS patch
+ * https://github.com/kwhitley/itty-router-extras/discussions/16
+ */
 // corshelper.js
 export const handleCors = (options = {}) => request => {
     const {

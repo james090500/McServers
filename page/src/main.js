@@ -16,7 +16,10 @@ import "bootstrap";
 
 // Axios
 import axios from "axios";
-app.config.globalProperties.axios = axios;
+let axiosInstance = axios.create({
+  baseURL: (import.meta.env.DEV) ? 'http://localhost:8787' : 'https://mcservers-api.james090500.workers.dev'
+});
+app.config.globalProperties.axios = axiosInstance;
 
 // FontAwesome
 import { FontAwesomeIcon, FontAwesomeLayers } from "./fontawesome";

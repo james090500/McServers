@@ -1,7 +1,7 @@
 <template>
-  <tr class="mb-3" v-if="server != null" :class="{ premium: server.ip == capecraft }">
+  <tr class="mb-3" v-if="server != null" :class="{ premium: server.hash == capecraft }">
     <td class="col-1 text-center align-middle">
-      <div v-if="server.ip == capecraft">
+      <div v-if="server.hash == capecraft">
         <font-awesome-layers class="fa-2xl">
           <font-awesome-icon icon="circle" />
           <font-awesome-icon icon="star" transform="left-1 shrink-7" inverse />
@@ -42,7 +42,7 @@
 export default {
   data() {
     return {
-      capecraft: "play.capecraft.net",
+      capecraft: "92d1f515c258ca2ef1e8e7a3c79f879d8a59d1304051ba0d440c0b59349f600a",
       server: null,
     };
   },
@@ -55,7 +55,7 @@ export default {
   },
   created() {
     this.axios
-      .get(`https://mcservers-api.james090500.workers.dev/v1/server/${this.server_id}`)
+      .get(`/v1/server/${this.server_id}`)
       .then((response) => {
         this.server = response.data;
       });

@@ -29,6 +29,9 @@
                 </th>
             </thead>
             <tbody>
+                <!-- Premium Servers -->
+                <ServerComponent class="server-component" :server_id="`92d1f515c258ca2ef1e8e7a3c79f879d8a59d1304051ba0d440c0b59349f600a`" />
+                <!-- Other Servers -->
                 <ServerComponent class="server-component" v-for="server in servers" :key="server.name" :server_id="server.name" />
             </tbody>
         </table>
@@ -59,7 +62,7 @@
             };
         },
         created() {
-            this.axios.get("https://mcservers-api.james090500.workers.dev/v1/server/list").then((response) => {
+            this.axios.get("/v1/server/list").then((response) => {
                 this.servers = response.data;
             });
         },

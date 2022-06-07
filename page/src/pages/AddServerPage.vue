@@ -35,7 +35,7 @@
         },
         methods: {
             addServer() {
-                this.axios.post('https://mcservers-api.james090500.workers.dev/v1/server/create', {
+                this.axios.post('/v1/server/create', {
                     name: this.name,
                     ip: this.ip,
                     port: this.port
