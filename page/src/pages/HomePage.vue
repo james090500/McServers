@@ -29,10 +29,15 @@
                 </th>
             </thead>
             <tbody>
+                <transition name="fade" mode="out-in">
+                    <component :is="Component" />
+                </transition>
                 <!-- Premium Servers -->
                 <ServerComponent class="server-component" :server_id="`92d1f515c258ca2ef1e8e7a3c79f879d8a59d1304051ba0d440c0b59349f600a`" />
                 <!-- Other Servers -->
-                <ServerComponent class="server-component" v-for="server in servers" :key="server.name" :server_id="server.name" />
+                <TransitionGroup name="fade" mode="out-in">
+                    <ServerComponent class="server-component" v-for="server in servers" :key="server.name" :server_id="server.name" />
+                </TransitionGroup>
             </tbody>
         </table>
     </div>

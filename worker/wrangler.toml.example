@@ -9,3 +9,6 @@ compatibility_date = "2022-06-06"
 kv_namespaces = [
   { binding = "SERVERS", id = "", preview_id = "" }
 ]
+
+[triggers]
+crons = ["*/10 * * * *"]

@@ -22,6 +22,8 @@ export default {
             name: postData.name,
             ip: postData.ip,
             port: postData.port,
+            updated: Date.now(),
+            online: true,
             query: await this.doServerQuery(postData.ip, postData.port)
         })
 
@@ -33,7 +35,6 @@ export default {
     },
     async likeServer(serverHash) {
         let { value, metadata } = await SERVERS.getWithMetadata(serverHash);
-        await SERVERS.delete(serverHash);
         await SERVERS.put(serverHash, value, {
             metadata: { likes: metadata.likes + 1 }
         })
@@ -41,7 +42,30 @@ export default {
     },
     async doServerQuery(ip, port) {
         let response = await fetch(`https://minecraft-api.com/api/ping/${ip}/${port}/json`)
-        let data = await response.json();
-        return data;
+        return (response.headers.get('content-type').includes('application/json')) ? await response.json() : false
+    },
+    async updateServers() {
+        //List all servers
+        let allServers = await SERVERS.list();
+
+        //Loop through all servers
+        for(server in allServers.keys) {
+
+            //Get the server hash and data
+            console.log(server)
+            let { value, metadata } = await SERVERS.getWithMetadata(server.name);
+
+            //Perform an updated query
+            let serverQuery = this.doServerQuery(value.ip, value.port)
+
+            //If the query is offline set "online" to false and otherwise set it to true!
+            let serverData = JSON.parse(value);
+            serverData.updated = Date.now()
+            serverData.online = (serverQuery != false);
+            SERVERS.put(value.hash, serverData, {
+                metadata: { likes: metadata.likes }
+            })
+            console.log(`Updated ${value.hash} `)
+        }
     }
 }
