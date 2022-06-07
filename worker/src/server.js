@@ -49,10 +49,8 @@ export default {
         let allServers = await SERVERS.list();
 
         //Loop through all servers
-        for(server in allServers.keys) {
-
+        for(let server of allServers.keys) {
             //Get the server hash and data
-            console.log(server)
             let { value, metadata } = await SERVERS.getWithMetadata(server.name);
 
             //Perform an updated query
@@ -62,10 +60,10 @@ export default {
             let serverData = JSON.parse(value);
             serverData.updated = Date.now()
             serverData.online = (serverQuery != false);
-            SERVERS.put(value.hash, serverData, {
+            SERVERS.put(serverData.hash, JSON.stringify(serverData), {
                 metadata: { likes: metadata.likes }
             })
-            console.log(`Updated ${value.hash} `)
+            console.log(`[CRON] Updated ${serverData.hash} `)
         }
     }
 }
