@@ -24,7 +24,7 @@
                         </div>
                         <hr>
                         <div class="p-3 pt-0 d-grid text-center justify-content-none">
-                            <button :disabled="this.loading" class="btn btn-primary"><font-awesome-icon v-if="this.loading" icon="spinner" spin/> Add Server</button>
+                            <button :disabled="loading" class="btn btn-primary"><font-awesome-icon v-if="loading" icon="spinner" spin/> Add Server</button>
                             <small>The server will first go through validation checks then you'll be redirected.</small>
                         </div>
                     </form>
@@ -40,6 +40,7 @@
     export default {
         data() {
             return {
+                loading: false,
                 modal: null,
                 name: null,
                 ip: null,
