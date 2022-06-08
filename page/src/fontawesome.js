@@ -6,11 +6,11 @@ import {
 //Solid
 import {
   faHome, faCube, faCopy, faUsers, faRankingStar, faCircleInfo, faServer, faSignal,
-  faGamepad, faCircle, faStar, faThumbsUp, faPlus, faCheck
+  faGamepad, faCircle, faStar, faThumbsUp, faPlus, faCheck, faSpinner
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   faHome, faCube, faCopy, faUsers, faRankingStar, faCircleInfo, faServer, faSignal,
-  faGamepad, faCircle, faStar, faThumbsUp, faPlus, faCheck
+  faGamepad, faCircle, faStar, faThumbsUp, faPlus, faCheck, faSpinner
 );
 
 import {

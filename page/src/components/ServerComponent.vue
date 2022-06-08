@@ -1,6 +1,6 @@
 <template>
-    <tr class="mb-3" v-if="server != null" :class="{ premium: server.hash == capecraft }">
-        <td class="text-center align-middle">
+    <tr class="mb-3 d-flex align-items-center text-center" v-if="server != null" :class="{ 'premium': server.hash == capecraft }">
+        <td class="col-1 col-lg-1">
             <div v-if="server.hash == capecraft">
                 <font-awesome-layers class="fa-2xl">
                     <font-awesome-icon icon="circle" />
@@ -9,31 +9,28 @@
             </div>
             <kbd v-else>{{ server.likes }}</kbd>
         </td>
-        <td class="align-middle">
+        <td class="col-3 col-lg-2">
             <strong>
                 <router-link :to="`/server/${server.hash}`">{{ server.name }}</router-link>
             </strong>
         </td>
-        <td class="align-middle">
-            <img :src="`${$baseUrl}/v1/server/${server.hash}/motd`"/>
-            <div class="server-ip">
-                <span>
-                    <font-awesome-icon icon="cube" class="me-2" />{{ server.ip }}</span>
-                <button @click="copyIP" v-if="!copied">
-                    <font-awesome-icon icon="copy" class="me-1" />Copy
-                </button>
-                <button @click="copyIP" v-else>
-                    <font-awesome-icon icon="check" class="me-1" />Copied!
+        <td class="col-lg-4 d-none d-lg-block">
+            <img :src="`${$baseUrl}/v1/server/${server.hash}/motd`" class="w-100"/>
+            <div class="server-ip ps-2 text-start bg-info text-white">
+                <span class="fw-bold"><font-awesome-icon icon="cube" class="me-2" />{{ server.ip }}</span>
+                <button class="btn text-white float-end border-0 rounded-0 m-0" @click="copyIP">
+                    <span v-if="!copied" ><font-awesome-icon icon="copy" class="me-1" />Copy</span>
+                    <span v-else><font-awesome-icon icon="check" class="me-1" />Copied!</span>
                 </button>
             </div>
         </td>
-        <td class="text-center align-middle">
+        <td class="col-3 col-lg-2">
             <span class="badge text-bg-warning">{{ server.query.players.online }}/{{ server.query.players.max }}</span>
         </td>
-        <td class="text-center align-middle">
-            <span class="badge text-bg-primary">{{ server.query.version.name }}</span>
+        <td class="col-3 col-lg-2">
+            <span class="badge text-bg-primary text-wrap">{{ server.query.version.name }}</span>
         </td>
-        <td class="text-center align-middle">
+        <td class="col-2 col-lg-1">
             <span v-if="server.online" class="badge text-bg-success">Online</span>
             <span v-else class="badge text-bg-danger">Offline</span>
         </td>
@@ -77,35 +74,18 @@
     };
 </script>
 
-<style>
+<style scoped>
     .premium {
         background: rgb(255, 255, 219);
     }
 
-    .server-ip {
-        padding-left: 0.5rem;
-        text-align: left;
-        display: block;
-        color: #fff;
-        background: #42b7e6;
-        width: 620px;
-    }
-
-    .server-ip>span {
-        font-weight: bold;
-    }
-
     .server-ip>button {
-        color: #fff;
-        transition: 0.25s;
-        float: right;
         padding: 0 1rem;
-        margin: 0;
-        border: 0;
         background: #3a9ec5;
     }
 
     .server-ip>button:hover {
+        padding: 0 1rem;
         background: #3b88a7;
     }
 </style>

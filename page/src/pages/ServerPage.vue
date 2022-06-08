@@ -1,15 +1,17 @@
 <template>
     <div class="row" v-if="server">
-        <div class="col-4">
-            <div class="card my-3 p-3">
+        <h1 class="text-center d-block d-lg-none">{{server.name}}</h1>
+        <div class="col-lg-4">
+            <div class="card border-0 shadow my-3 p-3">
                 <div class="row">
-                    <div class="col-2">
-                        <img :src="server.query.favicon" class="w-full" />
+                    <div class="col-4 col-lg-2">
+                        <img :src="server.query.favicon" class="w-100 rounded shadow-sm" />
                     </div>
                     <div class="col">
-                        <h4>{{server.ip}}<span v-if="server.port != '25565'">:{{server.port}}</span></h4>
+                        <h1 class="d-block d-lg-none">{{server.ip}}<span v-if="server.port != '25565'">:{{server.port}}</span></h1>
+                        <h4 class="d-none d-lg-block">{{server.ip}}<span v-if="server.port != '25565'">:{{server.port}}</span></h4>
                     </div>
-                    <div class="col-2 text-right">
+                    <div class="col-2 col-lg-2 text-right">
                         <button v-if="!liked" @click="likeServer" class="btn btn-outline-primary btn-sm">
                             <font-awesome-icon :icon="['far', 'thumbs-up']" />
                         </button>
@@ -41,44 +43,46 @@
             </div>
         </div>
         <div class="col">
-            <h1 class="text-center">{{server.name}}</h1>
-            <div class="accordion">
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                            How do I join {{server.name}}?
-                        </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show">
-                        <div class="accordion-body">
-                            Simply open up Minecraft, click "Multiplayer" then click "Direct Connect" and type the IP
-                            <kbd>{{server.ip}}<span v-if="server.port != '25565'">:{{server.port}}</span></kbd>
+            <div class="shadow my-3 p-3 rounded">
+                <h1 class="text-center d-none d-lg-block">{{server.name}}</h1>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                How do I join {{server.name}}?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show">
+                            <div class="accordion-body">
+                                Simply open up Minecraft, click "Multiplayer" then click "Direct Connect" and type the IP
+                                <kbd>{{server.ip}}<span v-if="server.port != '25565'">:{{server.port}}</span></kbd>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-                            What version is {{server.name}}?
-                        </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse show">
-                        <div class="accordion-body">
-                            According to our automated data, the server version is <span
-                                class="badge text-bg-primary">{{ server.query.version.name }}</span>.
-                            However, this information can be incorrect if the server owners have a plugin.
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                What version is {{server.name}}?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse show">
+                            <div class="accordion-body">
+                                According to our automated data, the server version is <span
+                                    class="badge text-bg-primary">{{ server.query.version.name }}</span>.
+                                However, this information can be incorrect if the server owners have a plugin.
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
-                            Where is {{server.name}} hosted?
-                        </button>
-                    </h2>
-                    <div id="collapseThree" class="accordion-collapse collapse show">
-                        <div class="accordion-body">
-                            {{server.name}} is hosted in <strong>{{server.country}}</strong>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                                Where is {{server.name}} hosted?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse show">
+                            <div class="accordion-body">
+                                {{server.name}} is hosted in <strong>{{server.country}}</strong>
+                            </div>
                         </div>
                     </div>
                 </div>

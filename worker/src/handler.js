@@ -1,5 +1,6 @@
 import { Router } from 'itty-router'
 import {
+    withContent,
     json,
     missing,
     error,
@@ -24,10 +25,9 @@ router.get('/v1/server/list', async () => {
 })
 
 // Create the server
-router.post('/v1/server/create', async request => {
-    let formData = await request.json();
-    let response = await Server.createServer(formData)
-    return wrapCorsHeader((response) ? json(response) : error(500, 'Something went wrong'));
+router.post('/v1/server/create', withContent, async ({ content }) => {
+    let response = await Server.createServer(content)
+    return wrapCorsHeader((response) ? json(response) : error(400, 'Invalid request'));
 })
 
 //Like a server

@@ -18,6 +18,9 @@ export default {
         return serverQuery;
     },
     async createServer(postData) {
+        //Make sure data is submitted
+        if(postData == null || postData.ip == null || postData.name == null || postData.port == null) return false;
+
         let serverHash = await this.getHash(postData.ip, postData.port);
         let server = await SERVERS.get(serverHash)
         if(server != null) return server;
