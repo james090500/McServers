@@ -10,10 +10,6 @@ import { handleCors, wrapCorsHeader } from './corshelper'
 
 // Load the router
 const router = Router()
-const imageHeader = {
-    'Access-Control-Allow-Origin': '*',
-    'Content-type': 'image/png'
-}
 
 // List the servers
 router.get('/v1/server/list', async () => {
@@ -51,12 +47,6 @@ router.get('/v1/server/:serverHash', async request => {
     let response = await Server.getServer(request.params.serverHash)
     return wrapCorsHeader((response) ? json(response) : error(500, 'Something went wrong'));
 })
-
-// Testing CRON on Wrangler
-// router.get('/cron', async request => {
-//     await Server.updateServers();
-//     return json("Done")
-// })
 
 // All other routers
 router.options('*', handleCors())
