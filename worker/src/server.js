@@ -65,14 +65,16 @@ export default {
         let response = await fetch(`https://minecraft-api.com/api/ping/${ip}/${port}/json`)
         return (response.headers.get('content-type').includes('application/json')) ? await response.json() : false
     },
-    async updateServer(data, metadata) {
+    async updateServer(serverData, metadata) {
         //Perform an updated query
-        let serverQuery = this.doServerQuery(data.ip, data.port)
+        let serverQuery = await this.doServerQuery(serverData.ip, serverData.port)
+
+        //Put the query in response
+        serverData.query = serverQuery;
 
         //If the query is offline set "online" to false and otherwise set it to true!
-        let serverData = JSON.parse(data);
         serverData.updated = Date.now()
-        serverData.online = (serverQuery != false);
+        serverData.online = (serverData != false);
         serverData.country = await this.getServerCountry(serverData.ip)
         SERVERS.put(serverData.hash, JSON.stringify(serverData), {
             metadata: { likes: metadata.likes }
@@ -81,6 +83,7 @@ export default {
         //Log so we know performance
         console.log(`Cache has been updated for ${serverData.hash}`)
 
+        //Return the data
         return serverData;
     }
 }

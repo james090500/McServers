@@ -16,7 +16,7 @@
                 </ul>
             </p>
         </div>
-        <div class="table-responsive shadow rounded">
+        <div class="table-responsive shadow rounded mb-3">
             <table class="table table-borderless">
                 <thead class="bg-info">
                     <tr class="text-center d-flex align-items-center">
