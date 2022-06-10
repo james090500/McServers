@@ -22,7 +22,7 @@ export default {
         server.likes = metadata.likes;
 
         //If last update was over 10 minutes (600000 milliseconds ago) lets update the cache
-        return (server.updated < (Date.now() - 600000)) ? this.updateServer(value, metadata) : server
+        return (server.updated < (Date.now() - 600000)) ? this.updateServer(server, metadata) : server
     },
     async createServer(postData) {
         //Make sure data is submitted

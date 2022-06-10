@@ -7,8 +7,9 @@ A project for the CloudFlare Developer Challenge
 
 ## API
 ```
-GET - https://mcservers-api.james090500.com/v1/servers/list
-POST - https://mcservers-api.james090500.com/v1/servers/create
+GET - https://mcservers-api.james090500.com/v1/server/list
+POST - https://mcservers-api.james090500.com/v1/server/create
 GET https://mcservers-api.james090500.com/v1/server/<hash>
 POST https://mcservers-api.james090500.com/v1/server/<hash>/like
+GET https://mcservers-api.james090500.com/v1/server/<hash>/motd
 ```
