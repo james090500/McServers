@@ -1,4 +1,4 @@
-import router from './handler'
+import router from './router'
 
 // Return the router
 addEventListener('fetch', (event) => {
